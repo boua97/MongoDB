@@ -1,0 +1,36 @@
+// Connect to the MongoDB server
+mongo
+
+// Switch to the "contact" database
+use contact
+
+// Create the "contactlist" collection
+db.createCollection("contactlist")
+
+// Insert the given documents into the "contactlist" collection
+db.contactlist.insert({ "last_name": "Ben Lahmer", "first_name": "Fares", "email": "fares@gmail.com", "age": 26 })
+db.contactlist.insert({ "last_name": "Kefi", "first_name": "Seif", "email": "kefi@gmail.com", "age": 15 })
+db.contactlist.insert({ "last_name": "Fatnassi", "first_name": "Sarra", "email": "sarra.f@gmail.com", "age": 40 })
+db.contactlist.insert({ "last_name": "Ben Yahia", "first_name": "Rym", "age": 4 })
+db.contactlist.insert({ "last_name": "Cherif", "first_name": "Sami", "age": 3 })
+
+// Display all the documents in the "contactlist" collection
+db.contactlist.find()
+
+// Display the information about the contact with the first name "Fares"
+db.contactlist.findOne({ "first_name": "Fares" })
+
+// Display all the contacts with an age greater than 18
+db.contactlist.find({ "age": { $gt: 18 } })
+
+// Display all the contacts with an age greater than 18 and a name containing "ah"
+db.contactlist.find({ $and: [ { "age": { $gt: 18 } }, { $or: [ { "first_name": /ah/i }, { "last_name": /ah/i } ] } ] })
+
+// Change the first name of the contact with the last name "Kefi" from "Seif" to "Anis"
+db.contactlist.updateOne({ "last_name": "Kefi" }, { $set: { "first_name": "Anis" } })
+
+// Delete the contacts that are aged under 5
+db.contactlist.deleteMany({ "age": { $lt: 5 } })
+
+// Display all the documents in the "contactlist" collection again
+db.contactlist.find()
